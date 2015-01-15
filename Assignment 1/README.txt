@@ -1,1 +1,1 @@
-not posted zzz
+The files below contain data to test the minimum weight spanning tree algorithm. Each of the files in the left column contains 100 edge weighted graphs in the adjacency matrix format expected by the template. The files in the right column contain the output of a model solution on each set of test data.
