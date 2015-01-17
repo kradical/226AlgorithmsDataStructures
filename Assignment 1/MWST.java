@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Vector;
 import java.io.File;
+import java.util.PriorityQueue;
 
 //Do not change the name of the MWST class
 public class MWST{
@@ -45,16 +46,49 @@ public class MWST{
 		value of G[i][j] gives the weight of the edge.
 		No entries of G will be negative.
 	*/
+	public static class edge implements Comparable<edge>{
+		public int weight;
+		public int vertex1;
+		public int vertex2;
+		public edge(int initWeight, int initVertex1, int initVertex2){
+			weight = initWeight;
+			vertex1 = initVertex1;
+			vertex2 = initVertex2;
+		}
+
+		public void printEdge(){
+			System.out.println("EDGE ("+this.vertex1+", "+this.vertex2+")WEIGHT: "+this.weight);
+		}
+
+		public int compareTo(edge compareedge){
+			int compareQuantity = compareedge.weight;
+			return this.weight - compareQuantity;
+		}
+	}
 	static int MWST(int[][] G){
 		int numVerts = G.length;
-
 		/* Find a minimum weight spanning tree by Kruskal's algorithm */
 		/* (You may add extra functions if necessary) */
-		
+
 		/* ... Your code here ... */
-		
-		
-		
+		//sort the edges
+		//add edges from least weighted to greatest
+		//if a cycle forms throw out the edge
+		//once the tree has numVerts nodes it is done
+		PriorityQueue<edge> pq = new PriorityQueue<edge>();
+
+		for(int i = 0; i < numVerts; i++ ) {
+			for (int j = i + 1; j < numVerts; j++) {
+				if (G[i][j] > 0) {
+					edge DERP = new edge(G[i][j], i, j);
+					pq.add(DERP);
+				}
+			}
+		}
+		while(pq.size() > 0) {
+			edge LELE = pq.remove();
+			LELE.printEdge();
+		}
 		/* Add the weight of each edge in the minimum weight spanning tree
 		   to totalWeight, which will store the total weight of the tree.
 		*/
