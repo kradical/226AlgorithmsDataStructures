@@ -1,4 +1,8 @@
 /* MWST.java
+	Konrad Schultz
+	00761540
+	v0.0.1
+
    CSC 226 - Spring 2015
    Assignment 1 - Minimum Weight Spanning Tree Template
    
@@ -46,11 +50,11 @@ public class MWST{
 		value of G[i][j] gives the weight of the edge.
 		No entries of G will be negative.
 	*/
-	public static class edge implements Comparable<edge>{
+	public static class Edge implements Comparable<Edge>{
 		public int weight;
 		public int vertex1;
 		public int vertex2;
-		public edge(int initWeight, int initVertex1, int initVertex2){
+		public Edge(int initWeight, int initVertex1, int initVertex2){
 			weight = initWeight;
 			vertex1 = initVertex1;
 			vertex2 = initVertex2;
@@ -60,11 +64,16 @@ public class MWST{
 			System.out.println("EDGE ("+this.vertex1+", "+this.vertex2+")WEIGHT: "+this.weight);
 		}
 
-		public int compareTo(edge compareedge){
-			int compareQuantity = compareedge.weight;
+		public int compareTo(Edge compareEdge){
+			int compareQuantity = compareEdge.weight;
 			return this.weight - compareQuantity;
 		}
 	}
+
+	public static class Disjoint{
+
+	}
+
 	static int MWST(int[][] G){
 		int numVerts = G.length;
 		/* Find a minimum weight spanning tree by Kruskal's algorithm */
@@ -75,18 +84,18 @@ public class MWST{
 		//add edges from least weighted to greatest
 		//if a cycle forms throw out the edge
 		//once the tree has numVerts nodes it is done
-		PriorityQueue<edge> pq = new PriorityQueue<edge>();
+		PriorityQueue<Edge> pq = new PriorityQueue<Edge>();
 
 		for(int i = 0; i < numVerts; i++ ) {
 			for (int j = i + 1; j < numVerts; j++) {
 				if (G[i][j] > 0) {
-					edge DERP = new edge(G[i][j], i, j);
-					pq.add(DERP);
+					Edge tempEdge = new Edge(G[i][j], i, j);
+					pq.add(tempEdge);
 				}
 			}
 		}
 		while(pq.size() > 0) {
-			edge LELE = pq.remove();
+			Edge LELE = pq.remove();
 			LELE.printEdge();
 		}
 		/* Add the weight of each edge in the minimum weight spanning tree
