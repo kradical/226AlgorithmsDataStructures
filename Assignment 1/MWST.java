@@ -1,7 +1,13 @@
-/* MWST.java
+/*  MWST.java
 	Konrad Schultz
 	00761540
-	v0.0.1
+	v0.1.0
+
+    ***NOTE***
+   		I am not the original author of this file, I would also like to reference
+   		the Union-Find data structure I pulled from http://algs4.cs.princeton.edu/43mst/UF.java.html
+   		I heavily followed its implementation of disjoint sets!
+    ***NOTE***
 
    CSC 226 - Spring 2015
    Assignment 1 - Minimum Weight Spanning Tree Template
@@ -29,8 +35,7 @@
    is always equal to A[j][i].
 	
    An input file can contain an unlimited number of graphs; each will be 
-   processed separately.
-*/
+   processed separately.*/
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -38,28 +43,37 @@ import java.util.Vector;
 import java.io.File;
 import java.util.PriorityQueue;
 
-//Do not change the name of the MWST class
+/*Do not change the name of the MWST class*/
+
 public class MWST{
 
 	/* mwst(G)
 		Given an adjacency matrix for graph G, return the total weight
 		of all edges in a minimum weight spanning tree.
-		
 		If G[i][j] == 0, there is no edge between vertex i and vertex j
 		If G[i][j] > 0, there is an edge between vertices i and j, and the
 		value of G[i][j] gives the weight of the edge.
 		No entries of G will be negative.
 	*/
+
 	public static class Edge implements Comparable<Edge>{
-		public int weight;
-		public int vertex1;
-		public int vertex2;
+		private int weight;
+		private int vertex1;
+		private int vertex2;
 		public Edge(int initWeight, int initVertex1, int initVertex2){
 			weight = initWeight;
 			vertex1 = initVertex1;
 			vertex2 = initVertex2;
 		}
-
+		public int getVertex1(){
+			return vertex1;
+		}
+		public int getVertex2(){
+			return vertex2;
+		}
+		public int getWeight(){
+			return weight;
+		}
 		public void printEdge(){
 			System.out.println("EDGE ("+this.vertex1+", "+this.vertex2+")WEIGHT: "+this.weight);
 		}
@@ -71,19 +85,57 @@ public class MWST{
 	}
 
 	public static class Disjoint{
+		private int[] id;     // id[i] = parent of i
+		private byte[] rank;  // rank[i] = rank of subtree rooted at i (cannot be more than 31)
+		private int count;    // number of components
 
+		public Disjoint(int N) {
+			if (N < 0) throw new IllegalArgumentException();
+			count = N;
+			id = new int[N];
+			rank = new byte[N];
+			for (int i = 0; i < N; i++) {
+				id[i] = i;
+				rank[i] = 0;
+			}
+		}
+
+		public int find(int p) {
+			if (p < 0 || p >= id.length) throw new IndexOutOfBoundsException();
+			while (p != id[p]) {
+				id[p] = id[id[p]];    // path compression by halving
+				p = id[p];
+			}
+			return p;
+		}
+
+		public boolean connected(int p, int q) {
+			return find(p) == find(q);
+		}
+
+		public void union(int p, int q) {
+			int i = find(p);
+			int j = find(q);
+			if (i == j) return;
+
+			// make root of smaller rank point to root of larger rank
+			if      (rank[i] < rank[j]) id[i] = j;
+			else if (rank[i] > rank[j]) id[j] = i;
+			else {
+				id[j] = i;
+				rank[i]++;
+			}
+			count--;
+		}
 	}
 
 	static int MWST(int[][] G){
 		int numVerts = G.length;
-		/* Find a minimum weight spanning tree by Kruskal's algorithm */
-		/* (You may add extra functions if necessary) */
 
-		/* ... Your code here ... */
-		//sort the edges
-		//add edges from least weighted to greatest
-		//if a cycle forms throw out the edge
-		//once the tree has numVerts nodes it is done
+		/* Find a minimum weight spanning tree by Kruskal's algorithm
+		 (You may add extra functions if necessary)
+		 ... Your code here ... */
+
 		PriorityQueue<Edge> pq = new PriorityQueue<Edge>();
 
 		for(int i = 0; i < numVerts; i++ ) {
@@ -94,21 +146,25 @@ public class MWST{
 				}
 			}
 		}
-		while(pq.size() > 0) {
-			Edge LELE = pq.remove();
-			LELE.printEdge();
-		}
 		/* Add the weight of each edge in the minimum weight spanning tree
 		   to totalWeight, which will store the total weight of the tree.
 		*/
+
 		int totalWeight = 0;
+
 		/* ... Your code here ... */
-		
+		Disjoint tempSet = new Disjoint(numVerts);
+		while(!pq.isEmpty()) {
+			Edge tempEdge = pq.remove();
+			if(!tempSet.connected(tempEdge.getVertex1(), tempEdge.getVertex2())){
+				tempSet.union(tempEdge.getVertex1(), tempEdge.getVertex2());
+				totalWeight += tempEdge.getWeight();
+			}
+		}
 		return totalWeight;
 		
 	}
-	
-		
+
 	/* main()
 	   Contains code to test the MWST function. You may modify the
 	   testing code if needed, but nothing in this function will be considered
