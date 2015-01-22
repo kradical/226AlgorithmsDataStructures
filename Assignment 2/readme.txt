@@ -1,0 +1,1 @@
+The three datasets below contain lists of strings to insert and find in the balanced binary search tree. Further information about each dataset is given in the `Test Datasets' section of the assignment specification.
