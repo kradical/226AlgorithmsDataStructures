@@ -62,7 +62,7 @@ public class AVLTree{
 	*/
 	
 	public static final boolean TestBSTAfterEachInsertion = false;
-	public static final boolean TestBSTAfterEachDeletion = false;
+	public static final boolean TestBSTAfterEachDeletion = true;
 	
 	/* Threshold for printing the tree contents */
 	/* If one of the tests above fails, the entire tree will be printed if its
@@ -89,15 +89,29 @@ public class AVLTree{
 	*/
 	public TreeNode insert(String s){
 		/* Your code here */
-		return null;
-	}	
-	
+		TreeNode newNode = new TreeNode(s);
+		this.root = insertNew(this.root, s);
+		return newNode;
+	}
+
+	public TreeNode insertNew(TreeNode tempNode, String s) {
+		if (tempNode == null)
+			return new TreeNode(s);
+		int c = s.compareTo(tempNode.nodeValue);
+		//If s < nodeValue, go left
+		if (c < 0)
+			tempNode.leftChild = insertNew(tempNode.leftChild, s);
+		else
+			tempNode.rightChild = insertNew(tempNode.rightChild, s);
+		return tempNode;
+	}
 	/* remove(node)
 	   Given a TreeNode instance (which is assumed to be a node of the tree), 
 	   delete it from the tree and restore the tree properties.
 	*/
 	public void remove(TreeNode node){
 		/* Your code here */
+		System.out.println("DELETION");
 	}
 	
 	
