@@ -18,6 +18,7 @@
    B. Bird - 06/28/2014
 */
 
+import java.lang.System;
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.Arrays;
@@ -62,7 +63,7 @@ public class AVLTree{
 	*/
 	
 	public static final boolean TestBSTAfterEachInsertion = false;
-	public static final boolean TestBSTAfterEachDeletion = true;
+	public static final boolean TestBSTAfterEachDeletion = false;
 	
 	/* Threshold for printing the tree contents */
 	/* If one of the tests above fails, the entire tree will be printed if its
@@ -89,21 +90,68 @@ public class AVLTree{
 	*/
 	public TreeNode insert(String s){
 		/* Your code here */
+		//System.out.println("Inserting for: "+s);
 		TreeNode newNode = new TreeNode(s);
 		this.root = insertNew(this.root, s);
 		return newNode;
 	}
 
-	public TreeNode insertNew(TreeNode tempNode, String s) {
-		if (tempNode == null)
-			return new TreeNode(s);
-		int c = s.compareTo(tempNode.nodeValue);
-		//If s < nodeValue, go left
-		if (c < 0)
-			tempNode.leftChild = insertNew(tempNode.leftChild, s);
-		else
-			tempNode.rightChild = insertNew(tempNode.rightChild, s);
-		return tempNode;
+	public TreeNode insertNew(TreeNode p, String s) {
+		if (p == null) {
+			p = new TreeNode(s);
+		} else if(s.compareTo(p.nodeValue)<0) {
+			p.leftChild = insertNew(p.leftChild, s);
+			if(height(p.leftChild)-height(p.rightChild) == 2) {
+				if(s.compareTo(p.leftChild.nodeValue)<0){
+					p = rotateLeftChild(p);
+				}else{
+					p = dRotateLeftChild(p);
+				}
+			}
+		}else if(s.compareTo(p.nodeValue)>0) {
+			p.rightChild = insertNew(p.rightChild, s);
+			if(height(p.rightChild)-height(p.leftChild) == 2) {
+				if(s.compareTo(p.rightChild.nodeValue)>0){
+					p = rotateRightChild(p);
+				}else{
+					p = dRotateRightChild(p);
+				}
+			}
+		}
+		p.recomputeHeight();
+		return p;
+	}
+
+	public static int height(TreeNode p){
+		return p == null ? -1 : p.height;
+	}
+
+	public TreeNode rotateLeftChild(TreeNode k2){
+		TreeNode k1 = k2.leftChild;
+		k2.leftChild = k1.rightChild;
+		k1.rightChild = k2;
+		k2.recomputeHeight();
+		k1.recomputeHeight();
+		return k1;
+	}
+
+	public TreeNode rotateRightChild(TreeNode k1){
+		TreeNode k2 = k1.rightChild;
+		k1.rightChild = k2.leftChild;
+		k2.leftChild = k1;
+		k1.recomputeHeight();
+		k2.recomputeHeight();
+		return k2;
+	}
+
+	public TreeNode dRotateLeftChild(TreeNode k3){
+		k3.leftChild = rotateRightChild(k3.leftChild);
+		return rotateLeftChild(k3);
+	}
+
+	public TreeNode dRotateRightChild(TreeNode k1){
+		k1.rightChild = rotateLeftChild(k1.rightChild);
+		return rotateRightChild(k1);
 	}
 	/* remove(node)
 	   Given a TreeNode instance (which is assumed to be a node of the tree), 
