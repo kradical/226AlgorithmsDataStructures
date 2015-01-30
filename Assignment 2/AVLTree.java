@@ -101,27 +101,23 @@ public class AVLTree{
 			p = new TreeNode(s);
 		} else if(s.compareTo(p.nodeValue)<0) {
 			p.leftChild = insertNew(p.leftChild, s);
-			if(height(p.leftChild)-height(p.rightChild) == 2) {
-				if(s.compareTo(p.leftChild.nodeValue)<0){
-					p = rotateLeftChild(p);
-				}else{
-					p = dRotateLeftChild(p);
-				}
-			}
+			p.leftChild.parent = p;
+
 		}else if(s.compareTo(p.nodeValue)>0) {
 			p.rightChild = insertNew(p.rightChild, s);
-			if(height(p.rightChild)-height(p.leftChild) == 2) {
-				if(s.compareTo(p.rightChild.nodeValue)>0){
-					p = rotateRightChild(p);
-				}else{
-					p = dRotateRightChild(p);
-				}
-			}
+			p.rightChild.parent = p;
 		}
 		p.recomputeHeight();
+		if(p.parent != null)
+			rebalance(p.parent, s);
 		return p;
 	}
 
+	public void rebalance(TreeNode p, String s){
+		System.out.println("rebalance "+p.nodeValue);
+		System.out.println(height(p));
+		if(height(p.leftChild) - height(p.righChild) == 2)
+	}
 	public static int height(TreeNode p){
 		return p == null ? -1 : p.height;
 	}
@@ -159,7 +155,17 @@ public class AVLTree{
 	*/
 	public void remove(TreeNode node){
 		/* Your code here */
-		System.out.println("DELETION");
+
+
+
+	}
+
+	public TreeNode findSwapNode(TreeNode node){
+		node = node.leftChild;
+		while(true){
+			if(node.rightChild == null){ return node;}
+			node = node.rightChild;
+		}
 	}
 	
 	
