@@ -14,7 +14,6 @@
    a text file containing the input data and run the program with
 	java AVLTree file.txt
    where file.txt is replaced by the name of the text file.
-
    B. Bird - 06/28/2014
 */
 
@@ -43,9 +42,9 @@ public class AVLTree{
 	   Note that testing the AVL properties is a O(n) operation, so these
 	   tests can dramatically increase the running time of the program.
 	*/
-	   
+
 	public static final boolean TestAVLAfterEachInsertion = false;
-	public static final boolean TestAVLAfterEachDeletion = false;
+	public static final boolean TestAVLAfterEachDeletion = true;
 	
 	
 	/* Tests for binary search tree property */
@@ -61,10 +60,10 @@ public class AVLTree{
 	   Note that the binary search tree test is O(n), so the test will
 	   dramatically increase the running time of the program.
 	*/
-	
+
 	public static final boolean TestBSTAfterEachInsertion = false;
 	public static final boolean TestBSTAfterEachDeletion = false;
-	
+
 	/* Threshold for printing the tree contents */
 	/* If one of the tests above fails, the entire tree will be printed if its
 	   size is at most this value
@@ -83,7 +82,7 @@ public class AVLTree{
 	
 	
 	/* *********************** METHODS TO IMPLEMENT ************************ */
-	
+
 	/* insert(s)
 	   Inserts a node containing the string s into the tree and returns a 
 	   pointer to the inserted node.
@@ -101,23 +100,27 @@ public class AVLTree{
 			p = new TreeNode(s);
 		} else if(s.compareTo(p.nodeValue)<0) {
 			p.leftChild = insertNew(p.leftChild, s);
-			p.leftChild.parent = p;
-
+			if(height(p.leftChild)-height(p.rightChild) == 2) {
+				if(s.compareTo(p.leftChild.nodeValue)<0){
+					p = rotateLeftChild(p);
+				}else{
+					p = dRotateLeftChild(p);
+				}
+			}
 		}else if(s.compareTo(p.nodeValue)>0) {
 			p.rightChild = insertNew(p.rightChild, s);
-			p.rightChild.parent = p;
+			if(height(p.rightChild)-height(p.leftChild) == 2) {
+				if(s.compareTo(p.rightChild.nodeValue)>0){
+					p = rotateRightChild(p);
+				}else{
+					p = dRotateRightChild(p);
+				}
+			}
 		}
 		p.recomputeHeight();
-		if(p.parent != null)
-			rebalance(p.parent, s);
 		return p;
 	}
 
-	public void rebalance(TreeNode p, String s){
-		System.out.println("rebalance "+p.nodeValue);
-		System.out.println(height(p));
-		if(height(p.leftChild) - height(p.righChild) == 2)
-	}
 	public static int height(TreeNode p){
 		return p == null ? -1 : p.height;
 	}
@@ -155,22 +158,77 @@ public class AVLTree{
 	*/
 	public void remove(TreeNode node){
 		/* Your code here */
-
-
-
+		System.out.print("deleting: "+node.nodeValue);
+		this.root = delete(this.root, node.nodeValue);
+		printTree();
 	}
 
-	public TreeNode findSwapNode(TreeNode node){
-		node = node.leftChild;
-		while(true){
-			if(node.rightChild == null){ return node;}
-			node = node.rightChild;
+	public TreeNode delete(TreeNode n, String s){
+		//doesn't exist
+		int compare = s.compareTo(n.nodeValue);
+		if(n == null) return null;
+		if(compare < 0){
+			n.leftChild = delete(n.leftChild, s);
+			if(height(n.leftChild)-height(n.rightChild) == 2) {
+				if (s.compareTo(n.leftChild.nodeValue) < 0) {
+					n = rotateLeftChild(n);
+				} else {
+					n = dRotateLeftChild(n);
+				}
+			}
+			n.recomputeHeight();
+			return n;
+		}else if(compare > 0){
+			n.rightChild = delete(n.rightChild, s);
+			if(height(n.rightChild)-height(n.leftChild) == 2) {
+				if(s.compareTo(n.rightChild.nodeValue)>0){
+					n = rotateRightChild(n);
+				}else{
+					n = dRotateRightChild(n);
+				}
+			}
+			n.recomputeHeight();
+			return n;
+		}else{
+			if(n.leftChild == null && n.rightChild == null)
+				return null;
+			if(n.leftChild == null)
+				return n.rightChild;
+			if(n.rightChild == null)
+				return n.leftChild;
+			String smallestString = smallest(n.rightChild);
+			n.nodeValue = smallestString;
+			n.rightChild = delete(n.rightChild, smallestString);
+			if(height(n.rightChild)-height(n.leftChild) == 2) {
+				if(s.compareTo(n.rightChild.nodeValue)<0){
+					n = rotateRightChild(n);
+				}else{
+					n = dRotateRightChild(n);
+				}
+			}
+			if(height(n.leftChild)-height(n.rightChild) == 2) {
+
+				if (s.compareTo(n.leftChild.nodeValue) > 0) {
+
+					n = rotateLeftChild(n);
+				} else {
+					n = dRotateLeftChild(n);
+				}
+			}
+			n.recomputeHeight();
+			return n;
 		}
+	}
+
+	public String smallest(TreeNode n){
+		if(n.leftChild == null)
+			return n.nodeValue;
+		return smallest(n.leftChild);
 	}
 	
 	
 	/* ******************** END OF METHODS TO IMPLEMENT ******************** */
-	
+
 	/* find(s)
 	   Searches for the string s in the tree. If a node containing s is found,
 	   returns a pointer to that node. If s is not found in the tree, the return
@@ -191,15 +249,15 @@ public class AVLTree{
 		return null;
 	}
 
-	
-	
+
+
 	/* getTreeSize()
 	   Returns the total number of nodes in the tree.
 	*/
 	public int getTreeSize(){
 		return getSubTreeSize(root);
 	}
-	
+
 	/* getSubTreeSize(node)
 	   Returns the total number of nodes in the subtree rooted at the provided 
 	   node.
@@ -209,7 +267,7 @@ public class AVLTree{
 			return 0;
 		return 1 + getSubTreeSize(node.leftChild) + getSubTreeSize(node.rightChild);
 	}
-	
+
 	/* getTreeHeight()
 	   Returns the height of the tree. A tree containing a single
 	   node has height 0. If the tree is empty, the value -1 is returned.
@@ -217,7 +275,7 @@ public class AVLTree{
 	public int getTreeHeight(){
 		return root.height;
 	}
-	
+
 	/* printTreeRecursive(node, leftPrefix, nodePrefix, rightPrefix)
 	   Takes a pointer to a tree node and strings containing the current indentation level
 	   and prints an in-order traversal of the subtree rooted at the provided node.
@@ -239,7 +297,7 @@ public class AVLTree{
 			printTreeRecursive(node.rightChild, rightPrefix + "    |", rightPrefix + "    |--",rightPrefix + "     " );
 		}
 	}
-	
+
 	/* printTree()
 	   Prints an in-order traversal of the tree.
 	*/
@@ -252,8 +310,8 @@ public class AVLTree{
 		}
 		System.out.println("----------");
 	}
-	
-	
+
+
 	/* TreeNode class */
 	/* Do not change anything in the class definition below */
 	/* If any contents of the TreeNode class are changed, your submission will
@@ -270,15 +328,15 @@ public class AVLTree{
 		//Height of the subtree rooted at this node.
 		//This value is only valid after the computeHeight() method
 		//has been called on this node or one of its ancestors.
-		public int height; 
-		
+		public int height;
+
 		public TreeNode(String value){
 			nodeValue = value;
 			leftChild = rightChild = null;
 			parent = null;
 			height = 0;
 		}
-		
+
 		/* recomputeHeight()
 		   If the subtrees of this node have changed height, this method should
 		   be called to adjust the height values of this node and its parents.
@@ -301,12 +359,12 @@ public class AVLTree{
 		   These are used by the testing code in main() to verify that the AVL
 		   properties hold 
 		*/
-		
+
 		//A field used by the verifyAVL process below.
 		//This field will be overwritten during the verification process,
 		//so your code should not use it for anything.
-		private int vheight; 
-		
+		private int vheight;
+
 		/* computeVHeight()
 		   Set the vheight field for this node and all descendents.
 		*/
@@ -321,15 +379,15 @@ public class AVLTree{
 				vheight = (rightChild.vheight + 1 > vheight)? rightChild.vheight + 1: vheight;
 			}
 		}
-		
+
 		/* verifyAVL()
 		   Returns true if the subtree rooted at this node is an AVL tree.
 		*/
 		public boolean verifyAVL(){
 			computeVHeight();
-			
+
 			ArrayDeque<TreeNode> S = new ArrayDeque<TreeNode>();
-			
+
 			TreeNode node, previousNode;
 			node = this;
 			while(node.leftChild != null){
@@ -357,14 +415,14 @@ public class AVLTree{
 			}
 			return true;
 		}
-		
+
 		/* verifyBST()
 		   Returns true if the subtree rooted at this node is a binary search tree.
 		*/
 		public boolean verifyBST(){
-			
+
 			ArrayDeque<TreeNode> S = new ArrayDeque<TreeNode>();
-			
+
 			TreeNode node, previousNode;
 			node = this;
 			while(node.leftChild != null){
@@ -388,7 +446,7 @@ public class AVLTree{
 			}
 			return true;
 		}
-		
+
 	}
 	/* TreeError(T, format, args)
 	   Prints the provided error message, possibly printing the contents of the
@@ -432,31 +490,31 @@ public class AVLTree{
 		}else{
 			System.out.printf("Reading tree values from %s.\n",args[0]);
 		}
-		
+
 		Vector<String> insertValues = new Vector<String>();
-		Vector<String> searchValues = new Vector<String>();		
+		Vector<String> searchValues = new Vector<String>();
 		String nextWord;
-		
+
 		while(s.hasNext() && !(nextWord = s.next().trim()).equals("###"))
 			insertValues.add(nextWord);
 		System.out.printf("Read %d strings.\n",insertValues.size());
-		
+
 		if (interactiveMode){
 			System.out.printf("Enter a list of strings to search for in the tree, one per line.\n");
 			System.out.printf("To end the list, enter '###'.\n");
 		}else{
 			System.out.printf("Reading search values from %s.\n",args[0]);
-		}	
-		
+		}
+
 		while(s.hasNext() && !(nextWord = s.next().trim()).equals("###"))
 			searchValues.add(nextWord);
 		System.out.printf("Read %d strings.\n",searchValues.size());
-		
+
 		AVLTree T = new AVLTree();
 
 		long startTime, endTime;
 		double totalTimeSeconds;
-		
+
 		startTime = System.currentTimeMillis();
 
 		for(int i = 0; i < insertValues.size(); i++){
@@ -474,15 +532,15 @@ public class AVLTree{
 		}
 		endTime = System.currentTimeMillis();
 		totalTimeSeconds = (endTime-startTime)/1000.0;
-		
+
 		if (!T.getRoot().verifyBST()){
 			TreeError(T,"Tree is not a binary search tree after all insertions.\n");
 		}else if (!T.getRoot().verifyAVL()){
 			TreeError(T,"AVL properties do not hold after all insertions.\n");
 		}
-		
+
 		System.out.printf("Inserted %d elements.\n Total Time (seconds): %.2f\n\n",insertValues.size(),totalTimeSeconds);
-		
+
 		int treeSize = T.getTreeSize();
 		int treeHeight = T.getTreeHeight();
 		if (treeSize <= PrintTreeSizeThreshold){
@@ -490,8 +548,8 @@ public class AVLTree{
 			T.printTree();
 		}
 		System.out.printf("Tree contains %d nodes and has height %d.\n",treeSize,treeHeight);
-		
-		
+
+
 		int foundCount = 0;
 		int notFoundCount = 0;
 		startTime = System.currentTimeMillis();
@@ -507,7 +565,7 @@ public class AVLTree{
 				TreeError(T,"Search for \"%s\": Returned node does not contain search string.\n",searchElement);
 
 			}
-				
+
 			//If the element was found, delete the found node from the tree.
 			if (foundNode != null){
 				T.remove(foundNode);
@@ -526,14 +584,14 @@ public class AVLTree{
 		}
 		endTime = System.currentTimeMillis();
 		totalTimeSeconds = (endTime-startTime)/1000.0;
-		
+
 		if (T.getRoot() != null && !T.getRoot().verifyBST()){
 			TreeError(T,"Tree is not a binary search tree after all deletions.\n");
 		}else if (T.getRoot() != null && !T.getRoot().verifyAVL()){
 			TreeError(T,"AVL properties do not hold after all deletions.\n");
 		}
-		
+
 		System.out.printf("Searched for %d items (%d found and deleted, %d not found).\nTotal Time (seconds): %.2f\n",
-							searchValues.size(),foundCount,notFoundCount,totalTimeSeconds);
+				searchValues.size(),foundCount,notFoundCount,totalTimeSeconds);
 	}
 }
