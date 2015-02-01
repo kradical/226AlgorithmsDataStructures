@@ -159,6 +159,7 @@ public class AVLTree{
 	public void remove(TreeNode node){
 		/* Your code here */
 		this.root = delete(this.root, node.nodeValue);
+
 	}
 
 	public TreeNode delete(TreeNode n, String s){
@@ -180,9 +181,15 @@ public class AVLTree{
 				return n.rightChild;
 			if(n.rightChild == null)
 				return n.leftChild;
-			String smallestString = smallest(n.rightChild);
-			n.nodeValue = smallestString;
-			n.rightChild = delete(n.rightChild, smallestString);
+			if(n.rightChild!=null) {
+				String smallestString = smallest(n.rightChild);
+				n.nodeValue = smallestString;
+				n.rightChild = delete(n.rightChild, smallestString);
+			}else if(n.leftChild!=null){
+				String largestString = largest(n.leftChild);
+				n.nodeValue = largestString;
+				n.leftChild = delete(n.leftChild, largestString);
+			}
 			rebalanceAfterD(n, s);
 			return n;
 		}
@@ -208,6 +215,12 @@ public class AVLTree{
 		n.recomputeHeight();
 	}
 
+
+	public String largest(TreeNode n){
+		if(n.rightChild == null)
+			return n.nodeValue;
+		return largest(n.rightChild);
+	}
 	public String smallest(TreeNode n){
 		if(n.leftChild == null)
 			return n.nodeValue;
