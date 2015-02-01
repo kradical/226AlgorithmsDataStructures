@@ -158,9 +158,7 @@ public class AVLTree{
 	*/
 	public void remove(TreeNode node){
 		/* Your code here */
-		System.out.print("deleting: "+node.nodeValue);
 		this.root = delete(this.root, node.nodeValue);
-		printTree();
 	}
 
 	public TreeNode delete(TreeNode n, String s){
@@ -169,25 +167,11 @@ public class AVLTree{
 		if(n == null) return null;
 		if(compare < 0){
 			n.leftChild = delete(n.leftChild, s);
-			if(height(n.leftChild)-height(n.rightChild) == 2) {
-				if (s.compareTo(n.leftChild.nodeValue) < 0) {
-					n = rotateLeftChild(n);
-				} else {
-					n = dRotateLeftChild(n);
-				}
-			}
-			n.recomputeHeight();
+			rebalanceAfterD(n, s);
 			return n;
 		}else if(compare > 0){
 			n.rightChild = delete(n.rightChild, s);
-			if(height(n.rightChild)-height(n.leftChild) == 2) {
-				if(s.compareTo(n.rightChild.nodeValue)>0){
-					n = rotateRightChild(n);
-				}else{
-					n = dRotateRightChild(n);
-				}
-			}
-			n.recomputeHeight();
+			rebalanceAfterD(n, s);
 			return n;
 		}else{
 			if(n.leftChild == null && n.rightChild == null)
@@ -199,25 +183,29 @@ public class AVLTree{
 			String smallestString = smallest(n.rightChild);
 			n.nodeValue = smallestString;
 			n.rightChild = delete(n.rightChild, smallestString);
-			if(height(n.rightChild)-height(n.leftChild) == 2) {
-				if(s.compareTo(n.rightChild.nodeValue)<0){
-					n = rotateRightChild(n);
-				}else{
-					n = dRotateRightChild(n);
-				}
-			}
-			if(height(n.leftChild)-height(n.rightChild) == 2) {
-
-				if (s.compareTo(n.leftChild.nodeValue) > 0) {
-
-					n = rotateLeftChild(n);
-				} else {
-					n = dRotateLeftChild(n);
-				}
-			}
-			n.recomputeHeight();
+			rebalanceAfterD(n, s);
 			return n;
 		}
+	}
+
+	public void rebalanceAfterD(TreeNode n, String s){
+		if(height(n.rightChild)-height(n.leftChild) == 2) {
+			if(s.compareTo(n.rightChild.nodeValue)<0){
+				n = rotateRightChild(n);
+			}else{
+				n = dRotateRightChild(n);
+			}
+		}
+		if(height(n.leftChild)-height(n.rightChild) == 2) {
+
+			if (s.compareTo(n.leftChild.nodeValue) > 0) {
+
+				n = rotateLeftChild(n);
+			} else {
+				n = dRotateLeftChild(n);
+			}
+		}
+		n.recomputeHeight();
 	}
 
 	public String smallest(TreeNode n){
