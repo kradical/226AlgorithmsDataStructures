@@ -59,41 +59,163 @@ public class ShortestPath{
 		No entries of G will be negative.
 	*/
 	public static class Heap {
-		//add
+		Node[] heap;
+		public int current_heapsize;
+
+		public Heap(int number_nodes){
+			current_heapsize = 1;
+			heap = new Node[number_nodes+1];
+		}
+
+		//ADD in heap order use bubble up to maintain heap property
+		public void add_in_heap_order(Node node_to_add){
+			heap[current_heapsize] = node_to_add;
+			bubble_up(current_heapsize);
+			++current_heapsize;
+		}
+
+		public void swap(int child, int parent){
+			Node temp = heap[child];
+			heap[child] = heap[parent];
+			heap[parent] = temp;
+			heap[child].heapindex = parent;
+			heap[parent].heapindex = child;
+		}
+
+		//auxilliary method to get the node to the right place in the heap
+		public void bubble_up(int index){
+			//we made it to the min value! return now!
+			if(index == 1){
+				heap[index].heapindex = 1;
+				return;
+			}
+			if(heap[index].distance < heap[index/2].distance){
+				//System.out.println(index/2);
+				swap(index, index/2);
+				bubble_up(index/2);
+			}else{
+				heap[index].heapindex = index;
+			}
+		}
+
 		//delete_min
+		public Node delete_min(){
+			Node minimum = heap[1];
+			heap[1] = heap[current_heapsize-1];
+			heap[current_heapsize-1] = null;
+			bubble_down(1);
+			--current_heapsize;
+			return minimum;
+		}
+
+		//auxilliary method to get the node back down to its rightful place
+		public void bubble_down(int index){
+			int mindex;
+			if(index > (heap.length-1)/2){
+				return;
+			}
+			if(heap[index*2+1] == null){
+				if(heap[index*2] == null){
+					return;
+				}
+				mindex = index*2;
+			}else{
+				mindex = (heap[index*2].distance < heap[index*2+1].distance) ? index*2 : index*2+1;
+			}
+
+			if(heap[mindex].distance < heap[index].distance){
+				swap(mindex, index);
+				bubble_down(mindex);
+			}
+		}
+
 		//adjust_priority
+		public void adjust_priority(int node_to_adjust){
+			bubble_down(node_to_adjust);
+			bubble_up(node_to_adjust);
+		}
 	}
 
 	public static class Node {
-		//node_id
-		//adjacencies -> a pair of target node and weight
-		//dist from source (0)
+		public final int nodeID;
+		//adjacencies -> a pair of: target node and weight
+		public int heapindex;
+		public Adjacencies[] adjacent;
+		public double distance;
+
+		public Node(int node, double initial_distance, int number_nodes) {
+			nodeID = node;
+			if (nodeID == 0) {
+				distance = 0;
+			} else {
+				distance = initial_distance;
+			}
+			adjacent = new Adjacencies[number_nodes];
+		}
+
+		public void print_info() {
+			System.out.printf("ID: %d distance: %f heapindex: %d\n", nodeID, distance, heapindex);
+			for (Adjacencies e : adjacent) {
+				if (e != null) {
+					System.out.printf("ADJACENT||ID: %d weight: %f heapindex %d\n", e.target_node.nodeID, e.weight, e.target_node.heapindex);
+				}
+			}
+		}
+
+		public static class Adjacencies {
+			public Node target_node;
+			public double weight;
+
+			public Adjacencies(Node out_target, double edge_weight) {
+				target_node = out_target;
+				weight = edge_weight;
+			}
+		}
 	}
 	
 
 	static int ShortestPath(int[][] G){
 		int numVerts = G.length;
 		int totalWeight = -1;
+		Heap nodeHeap = new Heap(numVerts);
+		Node[] all_nodes = new Node[numVerts];
 
+		//set up the heap with distances at infinity
+		for(int i = 0; i < numVerts; i++){all_nodes[i] = new Node(i,Double.POSITIVE_INFINITY, numVerts);}
 
-		for(int ndx = 1; ndx < numVerts; ndx++){
-			all_vertices[ndx] = the_heap.enqueue(ndx, Double.POSITIVE_INFINITY);
+		for(int i = 0; i < numVerts; i++){
+			for(int j = 0; j < numVerts; j++) {
+				if(G[i][j] != 0){
+					all_nodes[i].adjacent[j] = new Node.Adjacencies(all_nodes[j], G[i][j]);
+				}
+			}
+			nodeHeap.add_in_heap_order(all_nodes[i]);
 		}
-		for(int ndx = 0; ndx < numVerts; ndx++){
-			for(int i = 0; i<numVerts; i++) {
-				if(G[ndx][i] != 0){
-					all_vertices[ndx].adjacencies.add(all_vertices[i]);
+
+//		for(Node e:all_nodes){
+//			if(e != null){
+//				e.print_info();
+//			}
+//		}
+
+		//pop the minimum value, apply Dijkstra's!
+		while(nodeHeap.current_heapsize > 1){
+			Node temp = nodeHeap.delete_min();
+			//temp.print_info();
+			if(temp.nodeID == 1){
+				return (int)temp.distance;
+			}
+			for(Node.Adjacencies e:temp.adjacent){
+				if(e != null) {
+					double alt_dist = temp.distance + e.weight;
+					if (alt_dist < e.target_node.distance) {
+						e.target_node.distance = alt_dist;
+						//e.target_node.print_info();
+						nodeHeap.adjust_priority(e.target_node.heapindex);
+					}
 				}
 			}
 		}
-
-		while(!the_heap.isEmpty()){
-			FibonacciHeap.Entry u = the_heap.dequeueMin();
-			System.out.println(u.getValue());
-			System.out.println(u.getPriority());
-			System.out.prinln(u.adjacencies.get(0));
-		}
-
 		return totalWeight;
 	}
 	
