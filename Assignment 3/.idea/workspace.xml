@@ -28,20 +28,19 @@
       <file leaf-file-name="ShortestPath.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ShortestPath.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38202247" vertical-offset="0" max-vertical-offset="890">
-              <caret line="141" column="26" selection-start-line="141" selection-start-column="26" selection-end-line="141" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.51011235" vertical-offset="158" max-vertical-offset="1139">
+              <caret line="128" column="9" selection-start-line="128" selection-start-column="9" selection-end-line="128" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="n#!!doc;n#ShortestPath#0" expanded="false" />
-                <element signature="class#Heap#0;class#ShortestPath#0" expanded="false" />
                 <element signature="method#Heap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
                 <element signature="method#add_in_heap_order#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
                 <element signature="method#swap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
                 <element signature="method#bubble_up#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
                 <element signature="method#delete_min#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
                 <element signature="method#bubble_down#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-                <element signature="method#adjust_priority#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-                <element signature="n#!!doc;n#Node#0;n#ShortestPath#0" expanded="false" />
+                <element signature="e#3647#3648#0" expanded="true" />
+                <element signature="e#3681#3682#0" expanded="true" />
                 <element signature="class#Node#0;class#ShortestPath#0" expanded="false" />
                 <element signature="method#Node#0;class#Node#0;class#ShortestPath#0" expanded="false" />
                 <element signature="method#print_info#0;class#Node#0;class#ShortestPath#0" expanded="false" />
@@ -167,15 +166,16 @@
       <updated>1423814658094</updated>
       <workItem from="1424404635182" duration="18031000" />
       <workItem from="1424427621059" duration="2091000" />
+      <workItem from="1424472572054" duration="274000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20122000" />
+    <option name="totallyTimeSpent" value="20396000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="960" height="1040" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -225,11 +225,52 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ShortestPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="n#!!doc;n#ShortestPath#0" expanded="false" />
+            <element signature="method#Heap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
+            <element signature="method#add_in_heap_order#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
+            <element signature="method#swap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
+            <element signature="method#bubble_up#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
+            <element signature="method#delete_min#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
+            <element signature="method#bubble_down#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
+            <element signature="e#3647#3648#0" expanded="true" />
+            <element signature="e#3681#3682#0" expanded="true" />
+            <element signature="class#Node#0;class#ShortestPath#0" expanded="false" />
+            <element signature="method#Node#0;class#Node#0;class#ShortestPath#0" expanded="false" />
+            <element signature="method#print_info#0;class#Node#0;class#ShortestPath#0" expanded="false" />
+            <element signature="class#Adjacencies#0;class#Node#0;class#ShortestPath#0" expanded="false" />
+            <element signature="method#ShortestPath#0;class#ShortestPath#0" expanded="false" />
+            <element signature="method#main#0;class#ShortestPath#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/small.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="46002">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../InLab 1 hour heap/heap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1564">
+          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="25" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ShortestPath.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3893">
@@ -237,15 +278,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="n#!!doc;n#ShortestPath#0" expanded="false" />
-            <element signature="class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Heap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#add_in_heap_order#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#swap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_up#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#delete_min#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_down#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="method#adjust_priority#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="n#!!doc;n#Node#0;n#ShortestPath#0" expanded="false" />
+            <element signature="e#3647#3648#0" expanded="true" />
+            <element signature="e#3681#3682#0" expanded="true" />
             <element signature="class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Node#0;class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#print_info#0;class#Node#0;class#ShortestPath#0" expanded="false" />
@@ -279,15 +319,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="n#!!doc;n#ShortestPath#0" expanded="false" />
-            <element signature="class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Heap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#add_in_heap_order#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#swap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_up#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#delete_min#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_down#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="method#adjust_priority#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="n#!!doc;n#Node#0;n#ShortestPath#0" expanded="false" />
+            <element signature="e#3647#3648#0" expanded="true" />
+            <element signature="e#3681#3682#0" expanded="true" />
             <element signature="class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Node#0;class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#print_info#0;class#Node#0;class#ShortestPath#0" expanded="false" />
@@ -324,15 +363,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="n#!!doc;n#ShortestPath#0" expanded="false" />
-            <element signature="class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Heap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#add_in_heap_order#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#swap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_up#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#delete_min#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_down#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="method#adjust_priority#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="n#!!doc;n#Node#0;n#ShortestPath#0" expanded="false" />
+            <element signature="e#3647#3648#0" expanded="true" />
+            <element signature="e#3681#3682#0" expanded="true" />
             <element signature="class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Node#0;class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#print_info#0;class#Node#0;class#ShortestPath#0" expanded="false" />
@@ -358,15 +396,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="n#!!doc;n#ShortestPath#0" expanded="false" />
-            <element signature="class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Heap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#add_in_heap_order#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#swap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_up#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#delete_min#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_down#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="method#adjust_priority#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="n#!!doc;n#Node#0;n#ShortestPath#0" expanded="false" />
+            <element signature="e#3647#3648#0" expanded="true" />
+            <element signature="e#3681#3682#0" expanded="true" />
             <element signature="class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Node#0;class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#print_info#0;class#Node#0;class#ShortestPath#0" expanded="false" />
@@ -392,15 +429,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="n#!!doc;n#ShortestPath#0" expanded="false" />
-            <element signature="class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Heap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#add_in_heap_order#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#swap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_up#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#delete_min#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_down#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="method#adjust_priority#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="n#!!doc;n#Node#0;n#ShortestPath#0" expanded="false" />
+            <element signature="e#3647#3648#0" expanded="true" />
+            <element signature="e#3681#3682#0" expanded="true" />
             <element signature="class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Node#0;class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#print_info#0;class#Node#0;class#ShortestPath#0" expanded="false" />
@@ -426,15 +462,14 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="n#!!doc;n#ShortestPath#0" expanded="false" />
-            <element signature="class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Heap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#add_in_heap_order#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#swap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_up#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#delete_min#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_down#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="method#adjust_priority#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="n#!!doc;n#Node#0;n#ShortestPath#0" expanded="false" />
+            <element signature="e#3647#3648#0" expanded="true" />
+            <element signature="e#3681#3682#0" expanded="true" />
             <element signature="class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Node#0;class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#print_info#0;class#Node#0;class#ShortestPath#0" expanded="false" />
@@ -483,26 +518,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.6741574" vertical-offset="2550" max-vertical-offset="4760">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ShortestPath.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38202247" vertical-offset="0" max-vertical-offset="890">
-          <caret line="141" column="26" selection-start-line="141" selection-start-column="26" selection-end-line="141" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.51011235" vertical-offset="158" max-vertical-offset="1139">
+          <caret line="128" column="9" selection-start-line="128" selection-start-column="9" selection-end-line="128" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="n#!!doc;n#ShortestPath#0" expanded="false" />
-            <element signature="class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Heap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#add_in_heap_order#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#swap#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_up#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#delete_min#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#bubble_down#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="method#adjust_priority#0;class#Heap#0;class#ShortestPath#0" expanded="false" />
-            <element signature="n#!!doc;n#Node#0;n#ShortestPath#0" expanded="false" />
+            <element signature="e#3647#3648#0" expanded="true" />
+            <element signature="e#3681#3682#0" expanded="true" />
             <element signature="class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#Node#0;class#Node#0;class#ShortestPath#0" expanded="false" />
             <element signature="method#print_info#0;class#Node#0;class#ShortestPath#0" expanded="false" />

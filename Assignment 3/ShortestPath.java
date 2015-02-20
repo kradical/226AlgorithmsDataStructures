@@ -130,7 +130,6 @@ public class ShortestPath{
 
 		//adjust_priority bubble up or down to maintain heap property
 		public void adjust_priority(int node_to_adjust){
-			bubble_down(node_to_adjust);
 			bubble_up(node_to_adjust);
 		}
 	}
