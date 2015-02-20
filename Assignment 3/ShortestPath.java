@@ -43,12 +43,12 @@
 
 import java.lang.Override;
 import java.io.File;
-import java.util.*;
-import java.util.ArrayList;
+import java.lang.System;
+import java.util.Scanner;
 
 //Do not change the name of the ShortestPath class
+//returns -1 if 1 is not reachable from 0
 public class ShortestPath{
-
 	/* ShortestPath(G)
 		Given an adjacency matrix for graph G, return the total weight
 		of a minimum weight path from vertex 0 to vertex 1.
@@ -63,46 +63,45 @@ public class ShortestPath{
 		public int current_heapsize;
 
 		public Heap(int number_nodes){
-			current_heapsize = 1;
+			current_heapsize = 0;
 			heap = new Node[number_nodes+1];
 		}
 
 		//ADD in heap order use bubble up to maintain heap property
 		public void add_in_heap_order(Node node_to_add){
+			++current_heapsize;
 			heap[current_heapsize] = node_to_add;
 			bubble_up(current_heapsize);
-			++current_heapsize;
+
 		}
 
 		public void swap(int child, int parent){
 			Node temp = heap[child];
 			heap[child] = heap[parent];
 			heap[parent] = temp;
-			heap[child].heapindex = parent;
-			heap[parent].heapindex = child;
+			heap[child].heapindex = child;
+			heap[parent].heapindex = parent;
 		}
 
 		//auxilliary method to get the node to the right place in the heap
 		public void bubble_up(int index){
 			//we made it to the min value! return now!
+			heap[index].heapindex = index;
 			if(index == 1){
-				heap[index].heapindex = 1;
 				return;
 			}
-			if(heap[index].distance < heap[index/2].distance){
-				//System.out.println(index/2);
-				swap(index, index/2);
-				bubble_up(index/2);
-			}else{
-				heap[index].heapindex = index;
+			if(heap[index].distance < heap[index/2].distance) {
+				swap(index, index / 2);
+				bubble_up(index / 2);
 			}
 		}
 
-		//delete_min
+		//DELETE use bubble down to maintain heap property
 		public Node delete_min(){
 			Node minimum = heap[1];
-			heap[1] = heap[current_heapsize-1];
-			heap[current_heapsize-1] = null;
+			heap[1] = heap[current_heapsize];
+			heap[1].heapindex = 1;
+			heap[current_heapsize] = null;
 			bubble_down(1);
 			--current_heapsize;
 			return minimum;
@@ -111,7 +110,7 @@ public class ShortestPath{
 		//auxilliary method to get the node back down to its rightful place
 		public void bubble_down(int index){
 			int mindex;
-			if(index > (heap.length-1)/2){
+			if(index > (current_heapsize-1)/2){
 				return;
 			}
 			if(heap[index*2+1] == null){
@@ -129,13 +128,18 @@ public class ShortestPath{
 			}
 		}
 
-		//adjust_priority
+		//adjust_priority bubble up or down to maintain heap property
 		public void adjust_priority(int node_to_adjust){
 			bubble_down(node_to_adjust);
 			bubble_up(node_to_adjust);
 		}
 	}
 
+	//nodes of the input graph. represented by
+	//Identification
+	//heapindex (its important to keep track of each nodes position for an O(logn) update priority operation)
+	//adjacencies
+	//distance from source
 	public static class Node {
 		public final int nodeID;
 		//adjacencies -> a pair of: target node and weight
@@ -153,6 +157,7 @@ public class ShortestPath{
 			adjacent = new Adjacencies[number_nodes];
 		}
 
+		//prints relevant information about a node, great for debugging
 		public void print_info() {
 			System.out.printf("ID: %d distance: %f heapindex: %d\n", nodeID, distance, heapindex);
 			for (Adjacencies e : adjacent) {
@@ -162,6 +167,7 @@ public class ShortestPath{
 			}
 		}
 
+		//tuple containing a target node and the weight to get there (an edge)
 		public static class Adjacencies {
 			public Node target_node;
 			public double weight;
@@ -172,7 +178,6 @@ public class ShortestPath{
 			}
 		}
 	}
-	
 
 	static int ShortestPath(int[][] G){
 		int numVerts = G.length;
@@ -180,9 +185,10 @@ public class ShortestPath{
 		Heap nodeHeap = new Heap(numVerts);
 		Node[] all_nodes = new Node[numVerts];
 
-		//set up the heap with distances at infinity
-		for(int i = 0; i < numVerts; i++){all_nodes[i] = new Node(i,Double.POSITIVE_INFINITY, numVerts);}
-
+		//set up the heap with nodes with all their information
+		//source is 0 in this case and the distance to source starts at 0
+		//distance to the rest of the nodes starts at infinity
+		for(int i = 0; i < numVerts; i++){all_nodes[i] = new Node(i, Double.POSITIVE_INFINITY, numVerts);}
 		for(int i = 0; i < numVerts; i++){
 			for(int j = 0; j < numVerts; j++) {
 				if(G[i][j] != 0){
@@ -192,16 +198,12 @@ public class ShortestPath{
 			nodeHeap.add_in_heap_order(all_nodes[i]);
 		}
 
-//		for(Node e:all_nodes){
-//			if(e != null){
-//				e.print_info();
-//			}
-//		}
-
-		//pop the minimum value, apply Dijkstra's!
-		while(nodeHeap.current_heapsize > 1){
+		//Dijkstra's! Take the minimum node from the heap, check if its the destination
+		//(destination is 1 in this case)
+		//if not check its adjacencies for lower alternative distances.
+		//update its adjacencies priorities and repeat
+		while(nodeHeap.current_heapsize > 0){
 			Node temp = nodeHeap.delete_min();
-			//temp.print_info();
 			if(temp.nodeID == 1){
 				return (int)temp.distance;
 			}
@@ -210,7 +212,6 @@ public class ShortestPath{
 					double alt_dist = temp.distance + e.weight;
 					if (alt_dist < e.target_node.distance) {
 						e.target_node.distance = alt_dist;
-						//e.target_node.print_info();
 						nodeHeap.adjust_priority(e.target_node.heapindex);
 					}
 				}
