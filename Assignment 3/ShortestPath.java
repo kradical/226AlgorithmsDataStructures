@@ -42,11 +42,8 @@
 */
 
 import java.lang.Override;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.Vector;
 import java.io.File;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.ArrayList;
 
 //Do not change the name of the ShortestPath class
@@ -61,79 +58,42 @@ public class ShortestPath{
 		value of G[i][j] gives the weight of the edge.
 		No entries of G will be negative.
 	*/
-	public static class Vertex implements Comparable<Vertex> {
-		public final int vertex_name;
-		public Edge[] adjacencies;
-		public double minimum_distance = Double.POSITIVE_INFINITY;
-		public Vertex previous = null;
-
-		public Vertex(int vertexID) {
-			vertex_name = vertexID;
-			if(vertexID == 0){
-				minimum_distance = 0; //set source
-			}
-		}
-
-		public void print_info() {
-			System.out.println("Vertex: " + vertex_name + " dist: " + minimum_distance);
-			System.out.printf("Adjacencies: \n");
-			for(int i = 0; i<adjacencies.length; i++)
-				System.out.printf("%d, weight=%d\n", adjacencies[i].target.vertex_name, adjacencies[i].weight);
-			if(previous != null)
-				System.out.println("previous: "+previous.vertex_name);
-		}
-
-		public int compareTo(Vertex other_vertex) {
-			return (int)minimum_distance - (int)other_vertex.minimum_distance;
-		}
+	public static class Heap {
+		//add
+		//delete_min
+		//adjust_priority
 	}
 
-	public static class Edge{
-		public final Vertex target;
-		public final double weight;
-
-		public Edge(Vertex in_target, double in_weight){
-			target = in_target;
-			weight = in_weight;
-		}
+	public static class Node {
+		//node_id
+		//adjacencies -> a pair of target node and weight
+		//dist from source (0)
 	}
+	
 
 	static int ShortestPath(int[][] G){
 		int numVerts = G.length;
 		int totalWeight = -1;
-		Vertex[] all_vertices = new Vertex[numVerts];
-		ArrayList<Edge> temp_edges = new ArrayList<Edge>();
-		PriorityQueue<Vertex> vertices = new PriorityQueue<Vertex>(numVerts);
 
-		for(int ndx = 0; ndx < numVerts; ndx++) all_vertices[ndx] = new Vertex(ndx);
 
+		for(int ndx = 1; ndx < numVerts; ndx++){
+			all_vertices[ndx] = the_heap.enqueue(ndx, Double.POSITIVE_INFINITY);
+		}
 		for(int ndx = 0; ndx < numVerts; ndx++){
 			for(int i = 0; i<numVerts; i++) {
-				if (G[ndx][i] != 0) {
-					temp_edges.add(new Edge(all_vertices[i], G[ndx][i]));
+				if(G[ndx][i] != 0){
+					all_vertices[ndx].adjacencies.add(all_vertices[i]);
 				}
 			}
-			all_vertices[ndx].adjacencies = new Edge[temp_edges.size()];
-			all_vertices[ndx].adjacencies = temp_edges.toArray(all_vertices[ndx].adjacencies);
-			temp_edges.clear();
-			vertices.add(all_vertices[ndx]);
 		}
 
-		while(!vertices.isEmpty()){
-			Vertex u = vertices.poll();
-			if(u.vertex_name == 1)return (int)u.minimum_distance;
-			for(Edge e: u.adjacencies){
-				Vertex v = e.target;
-				double weight = e.weight;
-				double alt_distance = u.minimum_distance + weight;
-				if(alt_distance < v.minimum_distance){
-					vertices.remove(v);
-					v.minimum_distance = alt_distance;
-					vertices.add(v);
-				}
-			}
-
+		while(!the_heap.isEmpty()){
+			FibonacciHeap.Entry u = the_heap.dequeueMin();
+			System.out.println(u.getValue());
+			System.out.println(u.getPriority());
+			System.out.prinln(u.adjacencies.get(0));
 		}
+
 		return totalWeight;
 	}
 	
