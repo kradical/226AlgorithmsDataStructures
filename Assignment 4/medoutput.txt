@@ -1,0 +1,23 @@
+Reading input values from networks_15vertices.txt.
+Reading graph 1
+Graph 1: Max Flow Value is 160
+Reading graph 2
+Graph 2: Max Flow Value is 36
+Reading graph 3
+Graph 3: Max Flow Value is 180
+Reading graph 4
+Graph 4: Max Flow Value is 205
+Reading graph 5
+Graph 5: Max Flow Value is 303
+Reading graph 6
+Graph 6: Max Flow Value is 240
+Reading graph 7
+Graph 7: Max Flow Value is 127
+Reading graph 8
+Graph 8: Max Flow Value is 0
+Reading graph 9
+Graph 9: Max Flow Value is 42
+Reading graph 10
+Graph 10: Max Flow Value is 413
+Processed 10 graphs.
+Average Time (seconds): 0.00
