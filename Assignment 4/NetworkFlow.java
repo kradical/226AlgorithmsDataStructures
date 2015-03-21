@@ -90,6 +90,7 @@ public class NetworkFlow{
 		int numVerts = G.length;
 		int[] parent = new int[numVerts];
 		int[][] F = new int[numVerts][numVerts];
+		int max_flow = 0;
 		/* ... Your code here ... */
 		while(find_path(G, parent, numVerts)) {
 			int path_flow = Integer.MAX_VALUE;
@@ -108,7 +109,9 @@ public class NetworkFlow{
 					F[u][v] += path_flow;
 				}
 			}
+			max_flow += path_flow;
 		}
+		System.out.println(max_flow);
 		return F;
 		
 	}
