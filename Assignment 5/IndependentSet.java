@@ -46,11 +46,21 @@ public class IndependentSet{
 		int numVerts = G.length;
 
 		/* ... Your code here ... */
-		VertexSet myset = new VertexSet( numVerts );
-		myset.addVertex(1);
-		myset.printVertices();
-		return myset;
+		VertexSet current = new VertexSet( numVerts );
+		VertexSet best = new VertexSet( numVerts );
+		VertexSet forbidden = new VertexSet( numVerts );
+		findSets(G, best, current, forbidden, 0);
+		return best;
 		
+	}
+
+	static void findSets(int[][] G, VertexSet best, VertexSet current, VertexSet forbidden, int vertex){
+		if(vertex == 25){
+			return;
+		}
+		findSets(G, best, current, forbidden, ++vertex);
+		System.out.println(vertex);
+		return;
 	}
 	
 	/* verifyIndSet(G,S)
