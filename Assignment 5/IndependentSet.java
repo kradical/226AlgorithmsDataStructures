@@ -55,11 +55,35 @@ public class IndependentSet{
 	}
 
 	static void findSets(int[][] G, VertexSet best, VertexSet current, VertexSet forbidden, int vertex){
-		if(vertex == 25){
+		int n = G.length;
+		if(n == vertex){
+			if(current.getSize() > best.getSize()){
+				current.printVertices();
+				best.copyFrom(current);
+			}
 			return;
 		}
-		findSets(G, best, current, forbidden, ++vertex);
-		System.out.println(vertex);
+
+		if(current.getSize() + n - forbidden.getSize() <= best.getSize()){
+			return;
+		}
+
+		VertexSet forbidden1 = new VertexSet(n);
+		forbidden1.copyFrom(forbidden);
+		forbidden1.addVertex(vertex);
+		forbidden1.printVertices();
+		findSets(G, best, current, forbidden1, vertex+1);
+		if(!forbidden.isInSet(vertex)) {
+			current.addVertex(vertex);
+			for(int j=0; j < n; j++){
+				if(G[vertex][j] == 1){
+					System.out.println("NEIGHBOUR YAY");
+					forbidden1.addVertex(j);
+				}
+			}
+			findSets(G, best, current, forbidden1, vertex+1);
+			current.removeVertex(vertex);
+		}
 		return;
 	}
 	
