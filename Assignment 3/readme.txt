@@ -5,4 +5,4 @@ Vertices	Number of Graphs	Input Data	                Model Output
 25	      100	              sparse_ewg_25vertices.txt	  sparse_ewg_25vertices_output.txt
 50	      100	              sparse_ewg_50vertices.txt	  sparse_ewg_50vertices_output.txt
 100	      100	              sparse_ewg_100vertices.txt	sparse_ewg_100vertices_output.txt
-1000	    5	                sparse_ewg_1000vertices.txt	sparse_ewg_1000vertices_output.txt
+1000      5	                sparse_ewg_1000vertices.txt	sparse_ewg_1000vertices_output.txt
