@@ -1,4 +1,8 @@
 # 226AlgorithmsDataStructures
 Lab work and Class Assignments
-Status:
-	Assignment 1	--Theory Posted, incomplete
+
+	Assignment 1	--
+	Assignment 2	--
+	Assignment 3	--
+	Assignment 4	--
+	Assignment 5	--
