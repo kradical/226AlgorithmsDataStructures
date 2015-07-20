@@ -1,4 +1,8 @@
-# 226AlgorithmsDataStructures
+# Algorithms and Data Structures
+## CSC226
+
+[![Language](https://img.shields.io/badge/language-Java-red.svg)](http://www.oracle.com/technetwork/java/index.html)
+
 Lab work and Class Assignments
 
 	Assignment 1	--Minimum Weight Spanning Tree (Kruskal's Algorithm)
